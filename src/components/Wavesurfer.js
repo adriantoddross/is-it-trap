@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-// import scriptLoader from './ScriptLoader';
+import song from '../testsong.mp3';
 
 class Wavesurfer extends Component {
     constructor(props) {
@@ -15,7 +15,7 @@ class Wavesurfer extends Component {
         if (!existingScript) {
           const script = document.createElement('script');
           script.src = 'https://unpkg.com/wavesurfer.js';
-          script.id = 'waveform';
+          script.id = 'wavesurfer';
           document.body.appendChild(script);
       
           script.onload = () => {
@@ -28,18 +28,30 @@ class Wavesurfer extends Component {
 
       componentWillMount() {
             this.loadWavesurfer(() => {
-              const plugin = document.getElementById('waveform');
-              console.log(plugin);
+              // select wavesurfer
+              const wavesurfer = window.WaveSurfer;
+            
+              // create the instance
+              const wavesurferInstance = wavesurfer.create({
+                container: '#waveform',
+                waveColor: 'violet',
+                progressColor: 'purple',
+            });
+            
+            // load the song
+            wavesurferInstance.load(song);
 
               this.setState({ wavesurferReady: true });
             });
 
-          this.setState({ wavesurferReady: true });
       };
     
     render() {
+
         return (
+          <div>
             <div id="waveform"></div>
+          </div>
         );
     }
 };
