@@ -29,17 +29,22 @@ class Wavesurfer extends Component {
       componentWillMount() {
             this.loadWavesurfer(() => {
               // select wavesurfer
-              const wavesurfer = window.WaveSurfer;
+              const wavesurferInstance = window.WaveSurfer;
             
               // create the instance
-              const wavesurferInstance = wavesurfer.create({
+              const wavesurfer = wavesurferInstance.create({
                 container: '#waveform',
-                waveColor: 'violet',
                 progressColor: 'purple',
+                waveColor: 'violet',
+                scrollParent: true
             });
             
             // load the song
-            wavesurferInstance.load(song);
+            wavesurfer.load(song);
+
+            wavesurfer.on('ready', function () {
+              wavesurfer.play();
+          });
 
               this.setState({ wavesurferReady: true });
             });
